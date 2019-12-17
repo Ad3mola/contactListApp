@@ -11,185 +11,193 @@ const Wnumber = document.querySelector("#Wnumber");
 const warning = document.querySelector("#warning");
 const success = document.querySelector("#success");
 const search = document.querySelector("#search");
-second.style.display = "none";
-warning.style.display = "none";
-success.style.display = "none";
+const label = document.querySelector("#label");
+const add = document.querySelector("#add");
+const addContact = document.querySelector("#aCont");
+const contactForm = document.querySelector("#contactForm");
+const contL = document.querySelector("#contL");
+const list = document.querySelector("#list");
 
 function Contactss(firstName, secondName, Wnumber, email, number, img) {
-  this.firstName = firstName;
-  this.secondName = secondName;
-  this.number = number;
-  this.Wnumber = Wnumber;
-  this.email = email;
-  this.img = img;
+    this.firstName = firstName;
+    this.secondName = secondName;
+    this.number = number;
+    this.Wnumber = Wnumber;
+    this.email = email;
+    this.img = img;
 }
 
 function UI() {}
 
 UI.prototype.addToContact = function(contact) {
-  const li = document.createElement("li");
-  li.id = "li";
-  li.innerHTML = ` <div class="row mt-5">
-<div class="card-image text-left col-sm-4"><img src="${
-    contact.img
-  }" alt="" id="img" height="80px">
+    const li = document.createElement("li");
+    li.id = "li";
+    li.innerHTML = ` <div class="row mt-5" id="list">
+<div class="card-image text-left col-sm-4 mx-auto"><img src="${contact.img}" alt="" id="img">
 </div>
 <span class="card-text col-sm-8">
    <ul class="list-unstyled">
-       <li  id="sea">Name: ${contact.firstName} ${contact.secondName}</li>
-       <li>Phone: ${contact.number}</li>
-       <li>Whatsapp Number: ${contact.Wnumber}</li>
-       <li> Email: <a href="mailto: ${contact.email}"> ${contact.email}</a></li>
+       <li  id="sea"><span id="colon">Name</span>: ${contact.firstName} ${contact.secondName}</li>
+       <li><span id="colon"> Phone</span>: ${contact.number}</li>
+       <li><span id="colon">Whatsapp Number</span>: ${contact.Wnumber}</li>
+       <li><span id="colon"> Email</span>: <a href="mailto: ${contact.email}"> ${contact.email}</a></li>
    </ul>
-   <a  class="btn btn-success mt-4" id="call" href="tel: ${
-     contact.number
-   }"> Call</a>
-   <a  class="btn btn-success mt-4" id="message" href="https://wa.me/${
-     contact.Wnumber
-   }">Message</a>
-   <a href="#"><button class="btn btn-danger mt-4" id="delete">Delete</button></a>
+   <img src="./phone.svg"  class=" mt-4 img" id="call" href="tel: ${contact.number}" />
+   <img src="./whatsapp.svg"   class=" mt-4 img" id="message" href="https://wa.me/+234${contact.Wnumber}" />
+   <a href="#"> <img src="./trash-alt.svg" class=" mt-4 img" id="delete" /></a>
 </span>
-</div>`;
-  contList.appendChild(li);
-  second.style.display = "block";
-  firstName.value = "";
-  secondName.value = "";
-  Wnumber.value = "";
-  email.value = "";
-  number.value = "";
-  img.src = "";
-
-  setTimeout(function() {
-    success.remove();
-  }, 3000);
+</div><hr>`;
+    contList.appendChild(li);
+    firstName.value = "";
+    secondName.value = "";
+    Wnumber.value = "";
+    email.value = "";
+    number.value = "";
+    img.src = "";
 };
 
 class Store {
-  static getContacts() {
-    let contacts;
-    if (localStorage.getItem("contacts") === null) {
-      contacts = [];
-    } else {
-      contacts = JSON.parse(localStorage.getItem("contacts"));
+    static getContacts() {
+        let contacts;
+        if (localStorage.getItem("contacts") === null) {
+            contacts = [];
+        } else {
+            contacts = JSON.parse(localStorage.getItem("contacts"));
+        }
+        return contacts;
     }
-    return contacts;
-  }
 
-  static displayContacts() {
-    const contacts = Store.getContacts();
-    contacts.forEach(function(contact) {
-      const ui = new UI();
-      ui.addToContact(contact);
-    });
-  }
+    static displayContacts() {
+        const contacts = Store.getContacts();
+        if (contacts.length === 0) {
+            add.style.display = "block";
+        } else {
+            add.style.display = "none";
+        }
+        contacts.forEach(function(contact) {
+            const ui = new UI();
+            ui.addToContact(contact);
+        });
+    }
 
-  static addContacts(contact) {
-    const contacts = Store.getContacts();
-    contacts.push(contact);
-    localStorage.setItem("contacts", JSON.stringify(contacts));
-  }
+    static addContacts(contact) {
+        const contacts = Store.getContacts();
+        contacts.push(contact);
+        localStorage.setItem("contacts", JSON.stringify(contacts));
+    }
 
-  static removeContacts(target) {
-    const contacts = Store.getContacts();
-    contacts.forEach(function(contact, index) {
-      if (target.id === "delete") {
-        contacts.splice(index, 1);
-      }
-    });
-    localStorage.setItem("contacts", JSON.stringify(contacts));
-  }
+    static removeContacts(target) {
+        const contacts = Store.getContacts();
+
+        if (target.id === "delete") {
+            contacts.forEach(function(contact, index) {
+                const question = confirm("Are you sure?");
+                if (question) {
+                    contacts.splice(index, 1);
+                }
+            });
+            localStorage.setItem("contacts", JSON.stringify(contacts));
+        } 
+    }
 }
 
 UI.prototype.deleteContact = function(target) {
-  if (target.id === "delete") {
-    target.parentElement.parentElement.parentElement.parentElement.remove();
-    if (document.querySelector("#li") === null) {
-      second.style.display = "none";
+    if (target.id === "delete") {
+        target.parentElement.parentElement.parentElement.remove();
     }
-  }
 };
 
 UiLoaded();
 
 function UiLoaded() {
-  form.addEventListener("submit", postContact);
-  contList.addEventListener("click", Delete);
-  search.addEventListener("keyup", Filter);
+    form.addEventListener("submit", postContact);
+    contList.addEventListener("click", Delete);
+    search.addEventListener("keyup", Filter);
 }
 document.addEventListener("DOMContentLoaded", Store.displayContacts);
 
 function postContact(e) {
-  if (number.value === "") {
-    warning.style.display = "block";
-    warning.textContent = "Please enter a valid number";
-    setTimeout(function() {
-      warning.remove();
-    }, 3000);
-  } else if (firstName.value === "") {
-    warning.style.display = "block";
-    warning.textContent = "Please enter a valid First Name";
-    setTimeout(function() {
-      warning.remove();
-    }, 3000);
-  } else if (secondName.value === "") {
-    warning.style.display = "block";
-    warning.textContent = "Please enter a valid Second Name";
-    setTimeout(function() {
-      warning.remove();
-    }, 3000);
-  } else if (email.value === "") {
-    warning.style.display = "block";
-    warning.textContent = "Please enter a valid Email";
-    setTimeout(function() {
-      warning.remove();
-    }, 3000);
-  } else {
-    const contact = new Contactss(
-      firstName.value,
-      secondName.value,
-      Wnumber.value,
-      email.value,
-      number.value,
-      img.src
-    );
-    const ui = new UI();
-    ui.addToContact(contact);
-    Store.addContacts(contact);
+    if (firstName.value === "") {
+        firstName.classList.add("is-invalid");
+        setTimeout(function() {
+            firstName.classList.remove("is-invalid");
+        }, 3000);
+    } else if (secondName.value === "") {
+        secondName.classList.add("is-invalid");
+        setTimeout(function() {
+            secondName.classList.remove("is-invalid");
+        }, 3000);
+    } else if (number.value === "") {
+        number.classList.add("is-invalid");
+        setTimeout(function() {
+            number.classList.remove("is-invalid");
+        }, 3000);
+    } else if (email.value === "") {
+        email.classList.add("is-invalid");
+        setTimeout(function() {
+            email.classList.remove("is-invalid");
+        }, 3000);
+    } else {
+        const contact = new Contactss(
+            firstName.value,
+            secondName.value,
+            Wnumber.value,
+            email.value,
+            number.value,
+            img.src
+        );
+        const ui = new UI();
+        ui.addToContact(contact);
 
-    success.style.display = "block";
-  }
+        Store.addContacts(contact);
+    }
 
-  e.preventDefault();
+    e.preventDefault();
 }
 
 function Delete(e) {
-  const ui = new UI();
-  ui.deleteContact(e.target);
-  Store.removeContacts(e.target);
+    const ui = new UI();
+    ui.deleteContact(e.target);
+    Store.removeContacts(e.target);
 }
 
 picture.addEventListener("change", readURL, true);
 
 function readURL() {
-  var file = picture.files[0];
-  var reader = new FileReader();
-  reader.onloadend = function() {
-    img.src = reader.result;
-  };
-  if (file) {
-    reader.readAsDataURL(file);
-  } else {
-  }
+    var file = picture.files[0];
+    label.textContent = picture.files[0].name;
+    var reader = new FileReader();
+    reader.onloadend = function() {
+        img.src = reader.result;
+    };
+    if (file) {
+        reader.readAsDataURL(file);
+    } else {
+    }
 }
 
 function Filter(e) {
-  text = e.target.value.toLowerCase();
-  document.querySelectorAll("#sea").forEach(function(contact) {
-    const item = contact.firstChild.textContent;
-    if (item.toLowerCase().indexOf(text) != -1) {
-      contact.parentElement.parentElement.parentElement.style.display = "block";
-    } else {
-      contact.parentElement.parentElement.parentElement.style.display = "none";
-    }
-  });
+    text = e.target.value.toLowerCase();
+    document.querySelectorAll("#sea").forEach(function(contact) {
+        const item = contact.firstChild.textContent;
+        if (item.toLowerCase().indexOf(text) != -1) {
+            contact.parentElement.parentElement.parentElement.style.display =
+                "block";
+        } else {
+            contact.parentElement.parentElement.parentElement.style.display =
+                "none";
+        }
+    });
 }
+addContact.addEventListener("click", () => {
+    addContact.classList.add("active");
+    contL.classList.remove("active");
+    contactForm.style.display = "block";
+    list.style.display = "none";
+});
+contL.addEventListener("click", () => {
+    addContact.classList.remove("active");
+    contL.classList.add("active");
+    contactForm.style.display = "none";
+    list.style.display = "block";
+});
