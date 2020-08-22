@@ -1,91 +1,153 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/style.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="dist/css/style.css" />
     <title>Contact List</title>
-</head>
+  </head>
 
-<body class="bg-dark">
+  <body class="bg-dark">
     <nav class="navbar navbar-light bg-light fixed-top">
-        <a class="navbar-brand h1" href="#">Contact Book</a>
+      <a class="navbar-brand h1" href="#">Contact Book</a>
     </nav>
     <div class="container mt-5">
-                <p  class="text-light text-center" style="margin-top: 5em;"><span id="aCont">Add</span><span class="mx-4">  | </span> <span id="contL" class="active">contacts</span></p>
-        <div class="row">
-            <div class="col-md-7 float-left mx-auto mb-5" style="display: none;" id="contactForm">
-                <div class="card card-body text-center mt-5" style="border-radius: 0;">
-                    <div class="heading dislay-5 pb-3">
-                        <h1>Enter contact</h1>
-                    </div>
-                    <form id="form">
-                        <div class="form-group">
-                            <div class="input-group">
-                                <input class="form-control " type="text" name="first name" id="First"
-                                    placeholder="Enter First Name">
-                                    <div class="invalid-feedback">Enter first name</div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="input-group">
-                                <input class="form-control" type="text" name="second name" id="Second"
-                                    placeholder="Enter Second Name">
-                                    <div class="invalid-feedback">Enter second name</div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="input-group">
-                                <input class="form-control" type="tel" name="number" id="number"
-                                    placeholder="Enter Number" pattern="[0-9]{11}">
-                                    <div class="invalid-feedback">Enter phone number</div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="input-group">
-                                <input class="form-control" type="tel" name="Wnumber" id="Wnumber"
-                                    placeholder="Enter Whatsapp Number" pattern="[0-9]{11}">
-                                    <div class="invalid-feedback">Enter whatsapp number</div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="input-group">
-                                <input class="form-control" type="email" name="email" id="email"
-                                    placeholder="example@example.com"
-                                    pattern="[a-zA-z0-9._%+-]{5,}@[a-zA-Z0-9.-]{5,}.[a-z]{2,}">
-                                    <div class="invalid-feedback">Enter email address</div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="picture"><img class="img" style="cursor:pointer;margin:0 .2rem" src="./upload.svg"> <span id="label"> Upload picture</span><input type="file" name="pic" accept="image/*" id="picture" accept="image/png, image/jpeg" style="display: none;"></label>
-                        </div>
-                        <div class="form-group">
-                            <input type="submit" value="Submit" class="btn form-control" id="submit">
-                        </div>
-                    </form>
-                </div>
+      <p class="text-light text-center" style="margin-top: 5em;">
+        <span id="aCont" class="inactive">Add</span
+        ><span class="mx-4"> | </span>
+        <span id="contL">contacts</span>
+      </p>
+      <div class="row">
+        <div
+          class="col-md-7 float-left mx-auto mb-5"
+          style="display: none;"
+          id="contactForm"
+        >
+          <div
+            class="card card-body text-center mt-5"
+            style="border-radius: 0;"
+          >
+            <div class="heading dislay-5 pb-3">
+              <h1>Enter contact</h1>
+              <small class="contact-added">Added!</small>
             </div>
-            <div class="col-md-7 float-right mt-5 mb-5 mx-auto" id="list">
-                <div class="card card-body text-center" id="second">
-                    <h1 class="headding">Contact List</h1>
-                    <form class="form-inline mx-auto">
-                            <div class="input-group">
-                                <input type="text" name="search" id="search" placeholder="Search Contact" id="search">
-                            </div>
-                        </form>
-                    <ul class="list-unstyled" id="contList">
-                        <p id="add" style="display: none;font-style: italic;">No contacts added yet</p>
-                    </ul>
+            <form id="form">
+              <div class="form-group">
+                <div class="input-group">
+                  <input
+                    class="form-control"
+                    type="text"
+                    name="first name"
+                    id="First"
+                    placeholder="First Name"
+                  />
+                  <div class="invalid-feedback">Enter first name</div>
                 </div>
-
-            </div>
+              </div>
+              <div class="form-group">
+                <div class="input-group">
+                  <input
+                    class="form-control"
+                    type="text"
+                    name="second name"
+                    id="Second"
+                    placeholder="Second Name"
+                  />
+                  <div class="invalid-feedback">Enter second name</div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="input-group">
+                  <input
+                    class="form-control"
+                    type="tel"
+                    name="number"
+                    id="number"
+                    placeholder="Mobile Number"
+                    pattern="[0-9]{11}"
+                  />
+                  <div class="invalid-feedback">Enter phone number</div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="input-group">
+                  <input
+                    class="form-control"
+                    type="tel"
+                    name="Wnumber"
+                    id="Wnumber"
+                    placeholder="Whatsapp Number"
+                    pattern="[0-9]{11}"
+                  />
+                  <div class="invalid-feedback">Enter whatsapp number</div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="input-group">
+                  <input
+                    class="form-control"
+                    type="email"
+                    name="email"
+                    id="email"
+                    placeholder="example@example.com"
+                    pattern="[a-zA-z0-9._%+-]{5,}@[a-zA-Z0-9.-]{5,}.[a-z]{2,}"
+                  />
+                  <div class="invalid-feedback">Enter email address</div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="picture"
+                  ><img
+                    class="img"
+                    style="cursor: pointer; margin: 0 0.2rem;"
+                    src="./upload.svg" />
+                  <span id="label"> Upload picture</span
+                  ><input
+                    type="file"
+                    name="pic"
+                    accept="image/*"
+                    id="picture"
+                    accept="image/png, image/jpeg"
+                    style="display: none;"
+                /></label>
+              </div>
+              <div class="form-group">
+                <input
+                  type="submit"
+                  value="Submit"
+                  class="btn form-control"
+                  id="submit"
+                />
+              </div>
+            </form>
+          </div>
         </div>
+        <div class="col-md-7 float-right mt-5 mb-5 mx-auto" id="list">
+          <div class="card card-body text-center" id="second">
+            <h1 class="headding">Contact List</h1>
+            <form class="form-inline mx-auto">
+              <div class="input-group">
+                <input
+                  type="text"
+                  name="search"
+                  id="search"
+                  placeholder="Search Contact"
+                  id="search"
+                />
+              </div>
+            </form>
+            <ul class="list-unstyled" id="contList">
+              <p id="add" style="display: none; font-style: italic;">
+                No contacts added yet
+              </p>
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
     <script src="dist/js/bootstrap.min.js"></script>
-    <script src="app.js"></script>
-</body>
-
+    <script src="dist/js/app.js"></script>
+  </body>
 </html>
